@@ -1,0 +1,8 @@
+pid:
+  kp: 0.7
+  kd: 0.45
+pp:
+  distance_lookahead: 1
+mpc:
+  K: 12
+  T: 15
