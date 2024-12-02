@@ -12,6 +12,13 @@ import numpy as np
 from ee545 import utils
 import warnings
 
+import logging
+
+
+logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
+
+logger = logging.getLogger(__name__)
+
 
 def path_planning(start, end, curvature, resolution=0.1, interpolate_line=True):
     """Return the Dubins path between two states.
@@ -32,14 +39,31 @@ def path_planning(start, end, curvature, resolution=0.1, interpolate_line=True):
         path: interpolated Dubins path between start and end
         length: length of Dubins path
     """
+    start = np.squeeze(start)
+    end = np.squeeze(end)
+    # logger.debug(f"path_planning: start shape {start.shape}, end shape {end.shape}")
+    
     # Transform to make start of path the origin
     start = np.array(start, dtype=float)
+    # logger.debug(f"Debugging curvature: {self.curvature}")
     end = np.array(end, dtype=float)
     end[:2] -= start[:2]
+    # logger.debug(f"start: {start}") 
+    # if start.shape == (1,3):
+    #     start = start[0]
     start_orientation = start[2]
+    # logger.debug(f"update start: {start}") 
     rotation = utils.rotation_matrix(start_orientation)
+    # logger.debug(f"roatation: {rotation}")
+    # logger.debug(f"end: {end[ :2]}")
+    
+    # if end.shape == (1,3):
+    #     end = end[0]
+    # logger.debug(f"update end: {end}")
     end[:2] = np.matmul(end[:2], rotation)
+
     end[2] -= start[2]
+
 
     path, mode, length = path_planning_from_origin(
         end, curvature, resolution=resolution, interpolate_line=interpolate_line
@@ -71,8 +95,10 @@ def path_length(start, end, curvature):
         length: lengths of Dubins paths shape N
     """
     # Transform to make start of path the origin
+    
     start = np.atleast_2d(start)
     end = np.atleast_2d(end)
+    
     # We'll gracefully handle mismatched argument dimensions
     # in some situations where broadcasting semantics apply;
     # if either start or end have a singleton dimension, they'll

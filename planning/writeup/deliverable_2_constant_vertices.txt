@@ -1,0 +1,90 @@
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 600 -r 100 r2 -s 252 115 -g 350 350
+Lazy: False
+Vertices: 600
+Edges: 19907
+Running A*
+Path length: 362.88692665140957
+Planning time: 3.2563538551330566
+Edges evaluated: 23016
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 600 -r 90 r2 -s 252 115 -g 350 350
+Lazy: False
+Vertices: 600
+Edges: 16943
+Running A*
+Path length: 362.88692665140957
+Planning time: 2.3467466831207275
+Edges evaluated: 19076
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 600 -r 80 r2 -s 252 115 -g 350 350
+Lazy: False
+Vertices: 600
+Edges: 13880
+Running A*
+Path length: 362.9078053764987
+Planning time: 1.8447129726409912
+Edges evaluated: 15241
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 600 -r 70 r2 -s 252 115 -g 350 350
+Lazy: False
+Vertices: 600
+Edges: 11228
+Running A*
+Path length: 362.97329826568216
+Planning time: 1.4269049167633057
+Edges evaluated: 12096
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 600 -r 65 r2 -s 252 115 -g 350 350
+Lazy: False
+Vertices: 600
+Edges: 9828
+Running A*
+Path length: 363.068415217045
+Planning time: 1.2386229038238525
+Edges evaluated: 10458
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 600 -r 62.5 r2 -s 252 115 -g 350 350
+Lazy: False
+Vertices: 600
+Edges: 9332
+Running A*
+Path length: 363.068415217045
+Planning time: 1.3313708305358887
+Edges evaluated: 9885
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 600 -r 61.25 r2 -s 252 115 -g 350 350
+Lazy: False
+Vertices: 600
+Edges: 8777
+Running A*
+Path length: 363.068415217045
+Planning time: 1.076798439025879
+Edges evaluated: 9270
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 600 -r 60 r2 -s 252 115 -g 350 350
+Lazy: False
+Vertices: 600
+Edges: 8528
+Running A*
+Traceback (most recent call last):
+  File "scripts/run_search", line 82, in <module>
+    main(args)
+  File "scripts/run_search", line 39, in main
+    vpath, _ = search.astar(rm, start_id, goal_id)
+TypeError: cannot unpack non-iterable NoneType object
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 600 -r 200 r2 -s 252 115 -g 350 350
+Lazy: False                                                                                           
+Vertices: 600
+Edges: 51116
+Running A*
+Path length: 362.88669499958723
+Planning time: 10.911043167114258
+Edges evaluated: 73204

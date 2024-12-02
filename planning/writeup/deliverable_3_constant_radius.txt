@@ -1,0 +1,89 @@
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 600 -r 100 r2 -s 252 115 -g 350 350                                                                     
+Lazy: False                                                                                                                                                                                                
+Vertices: 600                                                                                                                                                                                              
+Edges: 19907                                                                                                                                                                                               
+Running A*                                                                                                                                                                                                 
+Path length: 362.88692665140957                                                                                                                                                                            
+Planning time: 2.934600830078125                                                                                                                                                                           
+Edges evaluated: 23016                                                                                                                                                                                     
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 590 -r 100 r2 -s 252 115 -g 350 350                                                                     
+Lazy: False                                                                                                                                                                                                
+Vertices: 590                                                                                                                                                                                              
+Edges: 19225                                                                                                                                                                                               
+Running A*                                                                                                                                                                                                 
+Path length: 362.88692665140957                                                                                                                                                                            
+Planning time: 2.8461358547210693                                                                                                                                                                          
+Edges evaluated: 22180                                                                                                                                                                                     
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 580 -r 100 r2 -s 252 115 -g 350 350                                                                     
+Lazy: False                                                                                                                                                                                                
+Vertices: 580                                                                                                                                                                                              
+Edges: 18546                                                                                                                                                                                               
+Running A*                                                                                                                                                                                                 
+Path length: 362.88692665140957                                                                                                                                                                            
+Planning time: 2.6681442260742188                                                                                                                                                                          
+Edges evaluated: 21403
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 570 -r 100 r2 -s 252 115 -g 350 350
+Lazy: False
+Vertices: 570
+Edges: 17977
+Running A*
+Path length: 362.88692665140957
+Planning time: 2.6114845275878906
+Edges evaluated: 20695
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 560 -r 100 r2 -s 252 115 -g 350 350
+Lazy: False
+Vertices: 560
+Edges: 17292
+Running A*
+Path length: 362.88692665140957
+Planning time: 2.8331921100616455
+Edges evaluated: 19932
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 550 -r 100 r2 -s 252 115 -g 350 350
+Lazy: False
+Vertices: 550
+Edges: 16605
+Running A*
+Path length: 362.88692665140957
+Planning time: 2.38737154006958
+Edges evaluated: 19181
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 545 -r 100 r2 -s 252 115 -g 350 350
+Lazy: False
+Vertices: 545
+Edges: 16283
+Running A*
+Path length: 362.88692665140957
+Planning time: 2.416111707687378
+Edges evaluated: 18837
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 542 -r 100 r2 -s 252 115 -g 350 350
+Lazy: False
+Vertices: 542
+Edges: 16083
+Running A*
+Path length: 362.88692665140957
+Planning time: 2.31720232963562
+Edges evaluated: 18604
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map2.txt -n 540 -r 100 r2 -s 252 115 -g 350 350
+Lazy: False
+Vertices: 540
+Edges: 16014
+Running A*
+Traceback (most recent call last):
+  File "scripts/run_search", line 82, in <module>
+    main(args)
+  File "scripts/run_search", line 39, in main
+    vpath, _ = search.astar(rm, start_id, goal_id) 
+TypeError: cannot unpack non-iterable NoneType object
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ 
+
+
+
+
+
+
+
+
+
+
+
+
+

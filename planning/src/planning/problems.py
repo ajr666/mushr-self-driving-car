@@ -3,6 +3,14 @@ import numpy as np
 from ee545 import utils
 from planning import dubins
 
+import logging
+
+
+logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
+
+logger = logging.getLogger(__name__)
+
+
 
 class PlanarProblem(object):
     def __init__(self, permissible_region, map_info=None, check_resolution=0.1):
@@ -28,6 +36,8 @@ class PlanarProblem(object):
             assert map_angle == 0
             utils.map_to_world(self.extents.T, map_info)
         self.extents = self.extents[:2, :]
+
+        self.goal_thresh = 0.1
 
     def check_state_validity(self, states):
         """Return whether states are valid.
@@ -75,7 +85,6 @@ class PlanarProblem(object):
         collision_free[valid_pixels] = self.permissible_region[pixel_y[valid_pixels], pixel_x[valid_pixels]]
         valid &= collision_free
 
-        
         # Convert the units back from pixels to meters for the caller
         if self.map_info is not None:
             utils.map_to_world(states, self.map_info)
@@ -92,6 +101,10 @@ class PlanarProblem(object):
         Returns:
             valid: True or False
         """
+        # if q1.shape[0] == 2:
+        #     q1 = np.append(q1, 0.0)
+        # if q2.shape[0] == 2:
+        #     q2 = np.append(q2, 0.0)
         path, length = self.steer(q1, q2)
         if length == 0:
             return False
@@ -119,6 +132,18 @@ class PlanarProblem(object):
             _, length = self.steer(start[start_i], end[end_i])
             heuristic_cost[i] = length
         return heuristic_cost
+
+    def goal_criterion(self, goal, q):
+        """Check if goal criterion is met between goal state and q state.
+
+        Args:
+            goal, q: np.arrays with shape (N, D) (where D may be 2 or 3)
+
+        Returns:
+            success: bool whether goal is reached
+        """
+        return self.compute_heuristic(goal, q) < self.goal_thresh
+
 
     def steer(self, q1, q2, **kwargs):
         """Return a local path connecting two states.
@@ -179,8 +204,11 @@ class SE2Problem(PlanarProblem):
         self, permissible_region, map_info=None, check_resolution=0.01, curvature=1.0
     ):
         super(SE2Problem, self).__init__(permissible_region, map_info, check_resolution)
+        assert curvature is not None and isinstance(curvature, (int, float)), "Curvature must be a valid float"
         self.curvature = curvature
         self.extents = np.vstack((self.extents, np.array([[-np.pi, np.pi]])))
+
+        self.goal_thresh = 1.5
 
     def compute_heuristic(self, q1, q2):
         """Compute the length of the Dubins path between two SE(2) states.
@@ -210,8 +238,23 @@ class SE2Problem(PlanarProblem):
             path: sequence of states on Dubins path between q1 and q2
             length: length of local path
         """
+        # Ensure configurations have three elements
+        # assert q1.shape[0] == 1, f"q1 has invalid shape: {q1.shape}"
+        # assert q2.shape[0] == 3, f"q2 has invalid shape: {q2.shape}"
+        # logger.debug(f"Q1 shape: {q1.shape}") 
+        # logger.debug(f"Q2 shape: {q2.shape}") 
+        
+        if self.curvature is None:
+            raise ValueError("Curvature must be a valid float")
+        # if q1.shape[0] == 2:
+        #     q1 = np.append(q1, 0.0)
+        # if q2.shape[0] == 2:
+        #     q2 = np.append(q2, 0.0)
         if resolution is None:
             resolution = self.check_resolution
+            
+        # logger.debug(f"Debugging curvature: {self.curvature}")
+        # logger.debug(f"Using resolution: {resolution}") 
         path, length = dubins.path_planning(
             q1,
             q2,
@@ -219,4 +262,5 @@ class SE2Problem(PlanarProblem):
             resolution=resolution,
             interpolate_line=interpolate_line,
         )
+        # logger.debug(f"finish dubins")
         return path, length

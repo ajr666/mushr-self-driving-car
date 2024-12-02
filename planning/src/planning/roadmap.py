@@ -11,6 +11,9 @@ import pickle
 from planning import problems
 from planning import samplers
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 class Roadmap(object):
     def __init__(
@@ -30,6 +33,7 @@ class Roadmap(object):
             saveto: path to cached roadmap data
 
         """
+
         self.problem = problem
         self.sampler = sampler
         self.num_vertices = num_vertices
@@ -43,12 +47,8 @@ class Roadmap(object):
         self.start = None
         self.goal = None
         self.edges_evaluated = 0
+        # logger.debug("before rm construct")
         self.graph, self.vertices, self.weighted_edges = self.construct()
-
-        # Print some graph summary statistics
-        print("Lazy:", self.lazy)
-        print("Vertices:", self.num_vertices)
-        print("Edges:", self.weighted_edges.shape[0])
 
     def heuristic(self, n1, n2):
         """Compute the heuristic between two nodes in the roadmap.
@@ -92,20 +92,15 @@ class Roadmap(object):
                 rows that correspond to collision-free edges are preserved
         """
         # Hint: call the check_edge_validity method from above.
-        # BEGIN QUESTION 1.3
-        # Initialize a list to store valid edges
         valid_edges = []
         
         for edge in weighted_edges:
-            u, v, length = edge  # Extract the start node, end node, and edge length
-            u, v = int(u), int(v)  # Ensure node indices are integers
-
-            # Check if the edge is valid 
+            u, v, length = edge
+            u, v = int(u), int(v)
             if self.check_edge_validity(u, v):
-                valid_edges.append(edge)  # Append valid edge to the list
+                valid_edges.append(edge)
                 
         valid_edges = np.array(valid_edges)
-        # END QUESTION 1.3
         return valid_edges
 
     def construct(self):
@@ -166,6 +161,42 @@ class Roadmap(object):
                 pickle.dump(data, f)
                 print("Saved roadmap to", self.saveto)
         return self.graph, self.vertices, self.weighted_edges
+
+    def rebuild_graph(self):
+        """Rebuild graph when vertices and weighted_edges have changed
+
+        Args:
+            max_iters: maximum number of sampling iterations
+
+        Returns:
+            vertices: np.array of states with shape num_vertices x D
+        """
+
+        # Insert the vertices and edges into a NetworkX graph object
+        if self.directed:
+            self.graph = nx.DiGraph()
+        else:
+            self.graph = nx.Graph()
+        vbunch = [
+            (i, dict(config=config))
+            for i, config in zip(np.arange(self.num_vertices, dtype=int), self.vertices)
+        ]
+        ebunch = [(int(u), int(v), float(w)) for u, v, w in self.weighted_edges]
+        self.graph.add_nodes_from(vbunch)
+        self.graph.add_weighted_edges_from(ebunch, "weight")
+
+        # Cache this roadmap, if path is specified.
+        if self.saveto is not None:
+            with open(self.saveto, "wb") as f:
+                data = {
+                    "graph": self.graph,
+                    "vertices": self.vertices,
+                    "weighted_edges": self.weighted_edges,
+                }
+                pickle.dump(data, f)
+                print("Saved roadmap to", self.saveto)
+        return self.graph, self.vertices, self.weighted_edges
+
 
     def sample_vertices(self, max_iters=100):
         """Sample self.num_vertices vertices from self.sampler.

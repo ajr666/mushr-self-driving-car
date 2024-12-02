@@ -57,13 +57,9 @@ def astar(rm, start, goal):
             # Collision check the edge between the parent and this node (if a
             # parent exists). If it's in collision, stop processing this entry;
             # we'll wait for another possible parent later in the queue.
-            # BEGIN QUESTION 2.2
-            # Collision check the edge between the parent and this node
-            if entry.parent != -1:  # Ensure there is a parent to check
-                # logging.debug(f"Checking edge {entry.parent} -> {entry.node}")
+            if entry.parent != -1:
                 if not rm.check_edge_validity(entry.parent, entry.node):
-                    continue  # Skip this entry if the edge is in collision
-            # END QUESTION 2.2
+                    continue
 
         expanded[entry.node] = True
         parents[entry.node] = entry.parent
@@ -88,22 +84,15 @@ def astar(rm, start, goal):
             #
             # However, if the neighbor has already been expanded, it's no longer
             # necessary to insert this QueueEntry.
-            # BEGIN QUESTION 2.1
-            # Compute the cost-to-come via entry.node
+            
             g = entry.cost_to_come + weight  
             f = g + h  
 
-            # Check if the neighbor has already been expanded
             if expanded[neighbor]:
                 continue
 
-            # Create a new QueueEntry for the neighbor
             new_entry = QueueEntry(f_value=f, counter=next(c), node=neighbor, parent=entry.node, cost_to_come=g)
-
-            # Insert this entry into the queue
             queue.push(new_entry)
-            # END QUESTION 2.1
-    # raise nx.NetworkXNoPath("Node {} not reachable from {}".format(goal, start))
 
 
 def extract_path(parents, goal):
@@ -116,18 +105,15 @@ def extract_path(parents, goal):
     Returns:
         vpath: a sequence of node labels from the start to the goal
     """
-    # Follow the parents of the node until a NULL entry is reached
-    # BEGIN QUESTION 2.1
     vpath = []
     current = goal
 
-    while current != -1:  # Assuming -1 represents a NULL entry
+    while current != -1:
         vpath.append(current)
         current = parents[current]
 
-    vpath.reverse()  # Reverse the path to go from start to goal
+    vpath.reverse()
     return vpath
-    # END QUESTION 2.1
 
 
 def shortcut(rm, vpath, num_trials=100):
@@ -153,24 +139,14 @@ def shortcut(rm, vpath, num_trials=100):
         # heuristic, and compute_path_length.
         indices = np.random.choice(len(vpath), size=2, replace=False)
         i, j = np.sort(indices)
-        # BEGIN QUESTION 2.3
-        "*** REPLACE THIS LINE ***"
-        # Get the nodes at the selected indices
         u, v = vpath[i], vpath[j]
 
-        # Check if a direct edge is collision-free
         if rm.check_edge_validity(u, v):
-            # Compute the original path length between u and v
             original_length = rm.compute_path_length(vpath[i:j+1])
-
-            # Compute the direct connection length
             shortcut_length = rm.heuristic(u, v)
 
-            # If the direct connection is shorter, update the path
             if shortcut_length < original_length:
-                vpath = vpath[:i+1] + vpath[j:]  # Replace the section between i and j
-        # raise NotImplementedError
-        # END QUESTION 2.3
+                vpath = vpath[:i+1] + vpath[j:]
     return vpath
 
 

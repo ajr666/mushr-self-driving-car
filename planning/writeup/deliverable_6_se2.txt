@@ -1,0 +1,32 @@
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map1.txt -n 40 -r 4 --lazy --show-edges se2 -s 1 1 0 -g 7 8 45 -c 3
+Lazy: True
+Vertices: 40
+Edges: 332
+Running A*
+Path length: 16.086911525242698
+Planning time: 0.0924537181854248
+Edges evaluated: 38
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map1.txt -n 40 -r 4 --lazy --show-edges se2 -s 1 1 0 -g 7 8 45 -c 4.5
+Lazy: True
+Vertices: 40
+Edges: 381
+Running A*
+Path length: 14.77307984701639
+Planning time: 0.10405158996582031
+Edges evaluated: 40
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map1.txt -n 40 -r 4 --lazy --show-edges se2 -s 1 1 0 -g 7 8 45 -c 9
+Lazy: True
+Vertices: 40
+Edges: 418
+Running A*
+Path length: 13.606245510056146
+Planning time: 0.1096794605255127
+Edges evaluated: 35
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map1.txt -n 40 -r 4 --lazy --show-edges se2 -s 1 1 0 -g 7 8 45 -c 15
+Lazy: True
+Vertices: 40
+Edges: 431
+Running A*
+Path length: 13.20596227969313
+Planning time: 0.10773944854736328
+Edges evaluated: 33

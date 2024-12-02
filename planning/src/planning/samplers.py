@@ -86,12 +86,10 @@ class HaltonSampler(Sampler):
         Returns:
             samples: np.array of N x D sample configurations
         """
-        # Generate Halton samples. Each entry lies in the range (0, 1).
         batch = np.empty((num_samples, self.dim))
         for i, x in zip(range(num_samples), self.gen):
             batch[i, :] = x
-
-        # Scale the batch of samples to fit the extents of the space.
+        
         for dim, (low, high) in enumerate(self.extents):
             batch[:, dim] = low + (high - low)*batch[:, dim]
 

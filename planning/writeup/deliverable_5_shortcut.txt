@@ -1,0 +1,26 @@
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map1.txt -n 25 -r 3.0 --lazy --shortcut --show-edges r2 -s 1 1 -g 7 8
+Lazy: True
+Vertices: 25
+Edges: 51
+Running A*
+Path length: 12.960450156532826
+Planning time: 0.004194021224975586
+Edges evaluated: 14
+Shortcutting A* path
+Shortcut length: 12.591492106547538
+Shortcut time: 0.018293380737304688
+
+
+lcl dwn:~/mushr_ws/src/mushr545au24/planning$ python3 scripts/run_search -m test/share/map1.txt -n 40 -r 4 --lazy --shortcut --show-edges r2 -s 1 1 -g 7 8
+Lazy: True
+Vertices: 40
+Edges: 224
+Running A*
+Path length: 12.465401651282487
+Planning time: 0.009116172790527344
+Edges evaluated: 37
+Shortcutting A* path
+Shortcut length: 12.332392060274973
+Shortcut time: 0.019199848175048828
+
+
